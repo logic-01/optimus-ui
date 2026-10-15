@@ -384,11 +384,11 @@ export class BaseComponent<PT = any> implements Lifecycle {
     }
 
     private _loadScopedThemeStyles(preset) {
-        const { css: scopedPresetVariables, style: scopedPresetCss } = this.$style?.getPresetTheme?.(preset, `[${this.$attrSelector}]`) || {};
+        const { css, style: cssProp } = this.$style?.getPresetTheme?.(preset, `[${this.$attrSelector}]`) || {};
         //load scoped css variables
-        const scopedStyleVar = this.$style?.load(scopedPresetVariables, { name: `${this.$attrSelector}-${this.$style?.name}`, ...this.$styleOptions });
+        const scopedStyleVar = this.$style?.load(css, { name: `${this.$attrSelector}-${this.$style?.name}`, ...this.$styleOptions });
         //load styles defined in dt.css
-        const scopedStyleCss = this.$style?.loadStyle({ name: `${this.$attrSelector}-${this.$style?.name}-style`, ...this.$styleOptions }, scopedPresetCss);
+        const scopedStyleCss = this.$style?.loadStyle({ name: `${this.$attrSelector}-${this.$style?.name}-style`, ...this.$styleOptions }, cssProp);
         this.scopedStyleVarEl = scopedStyleVar?.el;
         this.scopedStyleCssEl = scopedStyleCss?.el;
     }
